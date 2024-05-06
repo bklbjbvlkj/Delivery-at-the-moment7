@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airport Delivery Rating System</title>
+<style>
+/* CSS styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* تغيير الخط */
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #FF6B6B, #FFA07A, #FFC0CB); /* تغيير لون الخلفية */
+}
+
+.container {
+    padding: 20px;
+}
+
+.logo {
+    text-align: center;
+}
+
+.logo img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    padding: 15px; /* زيادة حجم الأزرار */
+    margin-bottom: 10px;
+    background-color: #FF6B6B; /* لون الأزرار */
+    color: #fff;
+    border: none;
+    border-radius: 8px; /* تغيير شكل الزر */
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-group input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #FFA07A; /* لون زر الإرسال */
+    color: #fff;
+    border: none;
+}
+
+.order-details {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #FFC0CB; /* لون خلفية تفاصيل الطلب */
+}
+
+.rating-question {
+    margin-bottom: 10px;
+}
+
+.rating-stars {
+    margin-bottom: 10px;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.rating-stars label {
+    font-size: 20px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.rating-stars label:hover,
+.rating-stars label:hover ~ label,
+.rating-stars input[type="radio"]:checked ~ label {
+    color: #FFA07A;
+}
+
+.map-img {
+    max-width: 100%;
+    height: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- Welcome Page -->
+<div class="container" id="welcomePage">
+    <div class="logo">
+        <img src="https://i.imgur.com/oK80Ro8.png" alt="Logo">
+        <a href="#" class="button" id="welcomeBtn">مرحبا</a>
+    </div>
+</div>
+
+<!-- Main Page -->
+<div id="mainPage" class="container" style="display: none;">
+    <button id="clientBtn" class="button">العميل</button>
+    <button id="pilotBtn" class="button">الطيار</button>
+    <button id="managerBtn" class="button">مدير العملاء</button>
+</div>
+
+<!-- Client Page -->
+<div id="clientPage" class="container" style="display: none;">
+    <button id="mainPageBtnClient" class="button">العودة إلى الصفحة الرئيسية</button>
+    <div class="form-group">
+        <input type="text" id="orderNumber" placeholder="اكتب رقم الأوردر">
+        <button id="searchBtn" class="button">بحث</button>
+    </div>
+    <div id="clientOrderDetails" style="display: none;">
+        <p>اسم الطيار: محمد احمد عبد المجيد</p>
+        <div class="rating-question">
+            <p>هل كانت تجربتك مع الطيار مرضية؟</p>
+            <input type="radio" name="rating1" value="نعم"> نعم
+            <input type="radio" name="rating1" value="لا"> لا
+        </div>
+        <div class="rating-question">
+            <p>هل ظهر الطيار بمظهر مهني ومرتب؟</p>
+            <input type="radio" name="rating2" value="نعم"> نعم
+            <input type="radio" name="rating2" value="لا"> لا
+        </div>
+        <div class="rating-question">
+            <p>هل كان الطيار يبدو متخصصًا ولديه معرفة جيدة بالمنطقة؟</p>
+            <input type="radio" name="rating3" value="نعم"> نعم
+            <input type="radio" name="rating3" value="لا"> لا
+        </div>
+        <div class="rating-question">
+            <p>هل كان الطيار وصوله في الوقت المحدد؟</p>
+            <input type="radio" name="rating4" value="نعم"> نعم
+            <input type="radio" name="rating4" value="لا"> لا
+        </div>
+        <div class="rating-question">
+            <p>هل كان الطيار ودودًا ومحترفًا في تعامله؟</p>
+            <input type="radio" name="rating5" value="نعم"> نعم
+            <input type="radio" name="rating5" value="لا"> لا
+        </div>
+        <div class="rating-question">
+            <p>هل قام الطيار بتسليم الطلب بشكل سليم ودون أي مشاكل؟</p>
+            <input type="radio" name="rating6" value="نعم"> نعم
+            <input type="radio" name="rating6" value="لا"> لا
+        </div>
+        <div class="rating-question">
+            <p>هل كانت تجربتك العامة مع الطيار إيجابية؟</p>
+            <input type="radio" name="rating7" value="نعم"> نعم
+            <input type="radio" name="rating7" value="لا"> لا
+        </div>
+        <div class="rating-stars">
+            <p>قيمة الطيار:</p>
+            <input type="radio" name="stars" value="1"> &#9733;
+            <input type="radio" name="stars" value="2"> &#9733;&#9733;
+            <input type="radio" name="stars" value="3"> &#9733;&#9733;&#9733;
+            <input type="radio" name="stars" value="4"> &#9733;&#9733;&#9733;&#9733;
+            <input type="radio" name="stars" value="5"> &#9733;&#9733;&#9733;&#9733;&#9733;
+        </div>
+        <div class="form-group">
+            <button id="submitRating" class="button">ارسال</button>
+        </div>
+    </div>
+</div>
+
+<!-- Pilot Login Page -->
+<div id="pilotLoginPage" class="container" style="display: none;">
+    <button id="mainPageBtnPilot" class="button">العودة إلى الصفحة الرئيسية</button>
+    <form id="pilotLoginForm">
+        <div class="form-group">
+            <input type="text" name="username" placeholder="اسم المستخدم" required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="كلمة المرور" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="دخول" class="button">
+        </div>
+    </form>
+</div>
+
+<!-- Pilot Page -->
+<div id="pilotPage" class="container" style="display: none;">
+    <button id="mainPageBtnPilotPage" class="button">العودة إلى الصفحة الرئيسية</button>
+    <div id="ordersContainer"></div>
+</div>
+
+<!-- Manager Login Page -->
+<div id="managerLoginPage" class="container" style="display: none;">
+    <button id="mainPageBtnManager" class="button">العودة إلى الصفحة الرئيسية</button>
+    <form id="managerLoginForm">
+        <div class="form-group">
+            <input type="text" name="username" placeholder="اسم المستخدم" required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="كلمة المرور" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="دخول" class="button">
+        </div>
+    </form>
+</div>
+
+<!-- Manager Page -->
+<div id="managerPage" class="container" style="display: none;">
+    <button id="mainPageBtnManagerPage" class="button">العودة إلى الصفحة الرئيسية</button>
+    <form id="pilotSelectForm">
+        <div class="form-group">
+            <select name="pilot" id="pilotSelect">
+                <option disabled selected>اختر الطيار</option>
+                <option>اسم الطيار 1</option>
+                <option>اسم الطيار 2</option>
+                <option>اسم الطيار 3</option>
+                <option>اسم الطيار 4</option>
+                <option>اسم الطيار 5</option>
+                <option>اسم الطيار 6</option>
+                <!-- Add other pilot names here -->
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="تتبع" class="button">
+        </div>
+    </form>
+    <div id="pilotDetails" style="display: none;">
+        <div class="order-details">
+            <p>عنوان التوصيل: سبورتنج شارع محمد امام عمارة 30 امام مسجد الحسنين</p>
+            <p>الوقت المقدر: 15 دقيقة</p>
+            <p>رقم الأوردر: 1112</p>
+            <p>تقييم الطيار: &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+        </div>
+        <img class="map-img" src="https://i.imgur.com/UDXVmU8.png" alt="Map">
+        <button id="trackBtn" class="button">تتبع</button>
+    </div>
+</div>
+
+<script>
+// JavaScript code
+document.getElementById('welcomeBtn').addEventListener('click', function() {
+    document.getElementById('welcomePage').style.display = 'none';
+    document.getElementById('mainPage').style.display = 'block';
+});
+
+document.getElementById('clientBtn').addEventListener('click', function() {
+    document.getElementById('mainPage').style.display = 'none';
+    document.getElementById('clientPage').style.display = 'block';
+});
+
+document.getElementById('pilotBtn').addEventListener('click', function() {
+    document.getElementById('mainPage').style.display = 'none';
+    document.getElementById('pilotLoginPage').style.display = 'block';
+});
+
+document.getElementById('managerBtn').addEventListener('click', function() {
+    document.getElementById('mainPage').style.display = 'none';
+    document.getElementById('managerLoginPage').style.display = 'block';
+});
+
+document.getElementById('pilotLoginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var username = this.username.value;
+    var password = this.password.value;
+    if (username === 'fathalla' && password === '123456') {
+        document.getElementById('pilotLoginPage').style.display = 'none';
+        document.getElementById('pilotPage').style.display = 'block';
+        displayOrders();
+    }
+});
+
+document.getElementById('managerLoginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var username = this.username.value;
+    var password = this.password.value;
+    if (username === 'fathalla' && password === '123456') {
+        document.getElementById('managerLoginPage').style.display = 'none';
+        document.getElementById('managerPage').style.display = 'block';
+    }
+});
+
+function displayOrders() {
+    var ordersContainer = document.getElementById('ordersContainer');
+    var ordersCount = 10; // عدد الطلبات التي تريد عرضها
+
+    // عرض أول 10 طلبات
+    for (var i = 1; i <= ordersCount; i++) {
+        ordersContainer.innerHTML += `
+            <div class="order-details">
+                <p>اسم العميل: محمد احمد عبد المجيد</p>
+                <p>العنوان: سبورتنج شارع محمد امام عمارة 30 امام مسجد الحسنين</p>
+                <p>الدفع: كاش</p>
+                <p>باقي: 50ج</p>
+                <p>نوع المركبة: موتوسيكل</p>
+                <p>مدة التوصيل: 15 دقيقة</p>
+                <img class="map-img" src="https://i.imgur.com/UDXVmU8.png" alt="Map">
+                <button class="button">اختيار هذا الاوردر</button>
+            </div>
+        `;
+    }
+}
+
+document.getElementById('pilotSelectForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var pilotName = document.getElementById('pilotSelect').value;
+    if (pilotName) {
+        document.getElementById('pilotDetails').style.display = 'block';
+    }
+});
+
+document.getElementById('trackBtn').addEventListener('click', function() {
+    window.open('https://i.imgur.com/UDXVmU8.png');
+});
+
+document.getElementById('searchBtn').addEventListener('click', function() {
+    var orderNumber = document.getElementById('orderNumber').value;
+    if (orderNumber === '1112') {
+        document.getElementById('clientOrderDetails').style.display = 'block';
+    }
+});
+
+document.getElementById('submitRating').addEventListener('click', function() {
+    // Handle rating submission
+    alert('تم');
+});
+
+// Add event listeners for back to main page buttons
+document.getElementById('mainPageBtnClient').addEventListener('click', function() {
+    document.getElementById('clientPage').style.display = 'none';
+    document.getElementById('mainPage').style.display = 'block';
+});
+
+document.getElementById('mainPageBtnPilot').addEventListener('click', function() {
+    document.getElementById('pilotLoginPage').style.display = 'none';
+    document.getElementById('mainPage').style.display = 'block';
+});
+
+document.getElementById('mainPageBtnManager').addEventListener('click', function() {
+    document.getElementById('managerLoginPage').style.display = 'none';
+    document.getElementById('mainPage').style.display = 'block';
+});
+
+document.getElementById('mainPageBtnPilotPage').addEventListener('click', function() {
+    document.getElementById('pilotPage').style.display = 'none';
+    document.getElementById('mainPage').style.display = 'block';
+});
+
+document.getElementById('mainPageBtnManagerPage').addEventListener('click', function() {
+    document.getElementById('managerPage').style.display = 'none';
+    document.getElementById('mainPage').style.display = 'block';
+});
+
+</script>
+
+</body>
+</html>
